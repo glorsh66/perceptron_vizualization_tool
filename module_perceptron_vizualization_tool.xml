@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_perceptron_vizualization_tool" default="compile.module.perceptron_vizualization_tool">
+  <dirname property="module.perceptron_vizualization_tool.basedir" file="${ant.file.module_perceptron_vizualization_tool}"/>
+  
+  <property name="module.jdk.home.perceptron_vizualization_tool" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.perceptron_vizualization_tool" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.perceptron_vizualization_tool" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.perceptron_vizualization_tool" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="perceptron_vizualization_tool.output.dir" value="${module.perceptron_vizualization_tool.basedir}/out/production/perceptron_vizualization_tool"/>
+  <property name="perceptron_vizualization_tool.testoutput.dir" value="${module.perceptron_vizualization_tool.basedir}/out/test/perceptron_vizualization_tool"/>
+  
+  <path id="perceptron_vizualization_tool.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="perceptron_vizualization_tool.module.production.classpath">
+    <path refid="${module.jdk.classpath.perceptron_vizualization_tool}"/>
+  </path>
+  
+  <path id="perceptron_vizualization_tool.runtime.production.module.classpath">
+    <pathelement location="${perceptron_vizualization_tool.output.dir}"/>
+  </path>
+  
+  <path id="perceptron_vizualization_tool.module.classpath">
+    <path refid="${module.jdk.classpath.perceptron_vizualization_tool}"/>
+    <pathelement location="${perceptron_vizualization_tool.output.dir}"/>
+  </path>
+  
+  <path id="perceptron_vizualization_tool.runtime.module.classpath">
+    <pathelement location="${perceptron_vizualization_tool.testoutput.dir}"/>
+    <pathelement location="${perceptron_vizualization_tool.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.perceptron_vizualization_tool">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.perceptron_vizualization_tool">
+    <patternset refid="excluded.from.module.perceptron_vizualization_tool"/>
+  </patternset>
+  
+  <path id="perceptron_vizualization_tool.module.sourcepath">
+    <dirset dir="${module.perceptron_vizualization_tool.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.perceptron_vizualization_tool" depends="compile.module.perceptron_vizualization_tool.production,compile.module.perceptron_vizualization_tool.tests" description="Compile module perceptron_vizualization_tool"/>
+  
+  <target name="compile.module.perceptron_vizualization_tool.production" depends="register.custom.compilers" description="Compile module perceptron_vizualization_tool; production classes">
+    <mkdir dir="${perceptron_vizualization_tool.output.dir}"/>
+    <javac2 destdir="${perceptron_vizualization_tool.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.perceptron_vizualization_tool}/javac">
+      <compilerarg line="${compiler.args.perceptron_vizualization_tool}"/>
+      <bootclasspath refid="perceptron_vizualization_tool.module.bootclasspath"/>
+      <classpath refid="perceptron_vizualization_tool.module.production.classpath"/>
+      <src refid="perceptron_vizualization_tool.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.perceptron_vizualization_tool"/>
+    </javac2>
+    
+    <copy todir="${perceptron_vizualization_tool.output.dir}">
+      <fileset dir="${module.perceptron_vizualization_tool.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.perceptron_vizualization_tool.tests" depends="register.custom.compilers,compile.module.perceptron_vizualization_tool.production" description="compile module perceptron_vizualization_tool; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.perceptron_vizualization_tool" description="cleanup module">
+    <delete dir="${perceptron_vizualization_tool.output.dir}"/>
+    <delete dir="${perceptron_vizualization_tool.testoutput.dir}"/>
+  </target>
+</project>
